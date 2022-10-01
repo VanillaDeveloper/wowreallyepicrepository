@@ -42,6 +42,8 @@ DATA WE LOG:
 
 
 
+
+
 local Library = loadstring(game:HttpGet('https://raw.githubusercontent.com/Rain-Design/Unnamed/main/Library.lua'))()
 Library.Theme = "Tokyo Night"
 local Flags = Library.Flags
@@ -56,6 +58,7 @@ getgenv().SettingsRedbox2 = {
         Type = "";
         Range = 25;
         HitPart = "Head";
+        IgnoreFriends = true;
     };
     Misc = {
         AntiScreenEffects = false;
@@ -147,9 +150,17 @@ getgenv().SettingsRedbox2 = {
                     local TargetHRP = v.Character.HumanoidRootPart
                     local mag = (HumanoidRootPart.Position - TargetHRP.Position).magnitude
                     if mag < TargetDistance then
-                        TargetDistance = mag
-                        Target = v
+                        if getgenv().SettingsRedbox2.MeleeAura.IgnoreFriends == true then
+                            if not v:IsFriendsWith(game.Players.LocalPlayer.UserId) then
+                                TargetDistance = mag
+                                Target = v
+                            end
+                        else
+                            TargetDistance = mag
+                            Target = v
+                        end
                     end
+                    
                 end
             end
         
@@ -247,6 +258,13 @@ Section2:Slider({
       getgenv().SettingsRedbox2.MeleeAura.Range = v
    end
 })
+
+Section2:Toggle({
+    Text = "Ignore Friends",
+    Callback = function(bool)
+        getgenv().SettingsRedbox2.MeleeAura.IgnoreFriends = bool;
+    end
+ })
 
 local drop = Section2:Dropdown({
     Text = "Hit Part",
