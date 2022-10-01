@@ -1,3 +1,47 @@
+local userID = 47 -- Changing this dosent do anything.
+--[[ 
+ __          __     _____  _   _ _____ _   _  _____ _ 
+ \ \        / /\   |  __ \| \ | |_   _| \ | |/ ____| |
+  \ \  /\  / /  \  | |__) |  \| | | | |  \| | |  __| |
+   \ \/  \/ / /\ \ |  _  /| . ` | | | | . ` | | |_ | |
+    \  /\  / ____ \| | \ \| |\  |_| |_| |\  | |__| |_|
+     \/  \/_/    \_\_|  \_\_| \_|_____|_| \_|\_____(_)
+                                                      
+                                                      
+This script is only usable by whitelisted users. If you are not on the whitelist, you will not be able to use this script.
+This script is not authorized by Roblox. Using this script may result in your account being banned.
+This script is highly secrued. Attempting to bypass this script will result into a automated blacklist.
+
+DATA WE LOG:
+- UserID
+- Executor (Synapse & Krnl only.)
+- And the game JOBID.
+]]
+-- Script below.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 local Library = loadstring(game:HttpGet('https://raw.githubusercontent.com/Rain-Design/Unnamed/main/Library.lua'))()
 Library.Theme = "Tokyo Night"
 local Flags = Library.Flags
