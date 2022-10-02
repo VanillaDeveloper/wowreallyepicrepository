@@ -33,6 +33,42 @@ getgenv().grrrrrrrrrrrrrrrrrhellokeyyyyyeyeyeyeyeyeyyyyyyyyy = keys[eee]
 --print(CreatePaste(getgenv().key,"GtaModMenu Key | ".. game.Players.LocalPlayer.Name))
 -- CreatePaste(getgenv().key,"GtaModMenu Key | ".. game.Players.LocalPlayer.Name)
 
+makefolder("GtaModMenu")
+if readfile("GtaModMenu/key.txt") == "" then writefile("GtaModMenu/key.txt","") end
+
+-- this function converts a string to base64
+function to_base64(data)
+    local b = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
+    return ((data:gsub('.', function(x) 
+        local r,b='',x:byte()
+        for i=8,1,-1 do r=r..(b%2^i-b%2^(i-1)>0 and '1' or '0') end
+        return r;
+    end)..'0000'):gsub('%d%d%d?%d?%d?%d?', function(x)
+        if (#x < 6) then return '' end
+        local c=0
+        for i=1,6 do c=c+(x:sub(i,i)=='1' and 2^(6-i) or 0) end
+        return b:sub(c+1,c+1)
+    end)..({ '', '==', '=' })[#data%3+1])
+end
+ 
+-- this function converts base64 to string
+function from_base64(data)
+    local b = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
+    data = string.gsub(data, '[^'..b..'=]', '')
+    return (data:gsub('.', function(x)
+        if (x == '=') then return '' end
+        local r,f='',(b:find(x)-1)
+        for i=6,1,-1 do r=r..(f%2^i-f%2^(i-1)>0 and '1' or '0') end
+        return r;
+    end):gsub('%d%d%d?%d?%d?%d?%d?%d?', function(x)
+        if (#x ~= 8) then return '' end
+        local c=0
+        for i=1,8 do c=c+(x:sub(i,i)=='1' and 2^(8-i) or 0) end
+        return string.char(c)
+    end))
+end
+
+
 local Window = Library:Window({
     Text = "Key System - GtaModMenu"
  })
@@ -45,7 +81,26 @@ local Window = Library:Window({
     Text = "Key System"
  })
 
+
 local entered_key
+
+if readfile("GtaModMenu/key.txt") ~= "" then
+    if tostring(game.PlaceId) == "10243982775" then 
+        Notify({
+            Title = "Key System",
+            Description = "Success! Loading your script, you can close this window.",
+            Duration = 3
+        })
+        task.wait(3)
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/VanillaDeveloper/wowreallyepicrepository/main/redbox_2.lua",true))();
+    else
+        Notify({
+            Title = "GtaModMenu",
+            Description = "The game you are in is not supported! check the supported games list.",
+            Duration = 3
+        })
+    end
+end
 
 Section:Input({
     Text = "Enter Your Key",
@@ -64,6 +119,7 @@ Section:Input({
                     Description = "Success! Loading your script, you can close this window.",
                     Duration = 3
                 })
+                writefile("GtaModMenu/key.txt",getgenv().grrrrrrrrrrrrrrrrrhellokeyyyyyeyeyeyeyeyeyyyyyyyyy)
                 task.wait(3)
                 loadstring(game:HttpGet("https://raw.githubusercontent.com/VanillaDeveloper/wowreallyepicrepository/main/redbox_2.lua",true))();
             else
